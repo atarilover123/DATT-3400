@@ -17,9 +17,7 @@ int time = 0;
 //an array of Friend objects - these are are moving agents
 Friend[] friends;
 
-int maxpal = 512;
-int numpal = 0;
-
+//variable to hold dimension
 int dim;
 
 void setup() {
@@ -27,7 +25,6 @@ void setup() {
   dim = width;
 
   background(0);
-  frameRate(30);
 
   //Create an array length for how many friend agents
   friends = new Friend[num];
@@ -42,8 +39,7 @@ void draw() {
   //move and draw friends - use the move and expose_simple methods from the object
   for (int c=0; c<num; c++) {
     friends[c].move();
-
-    friends[c].expose();
+    friends[c].expose_simple();
   }
 
   //find happy places - only do this if the value of time%2 is = to 0
@@ -81,10 +77,11 @@ void resetAll() {
       b=0;
       print("+");
     }
+
     if (a!=b) {
       friends[a].connectTo(b);
       friends[b].connectTo(a);
-      //      println(a+" made friends with "+b);
+      //println(a+" made friends with "+b);
     }
   }
 }
@@ -96,21 +93,24 @@ void resetAll() {
 //the Friend object
 
 class Friend {
+  //position and movement variables
   float x, y;
   float dx, dy;
   float vx, vy;
+  //id holds the index value of each agent
   int id;
 
+  //connection variables
   int numcon;
   int maxcon = 10;
   int lencon = 10+int(random(50));
   int[] connections = new int[maxcon];
 
-
+  //color and strokeweight
   color myc = color(random(255), random(255), random(255));
-  
-  float sw =random(0.1,1.4);
-  
+  float sw =random(0.1, 1.4);
+
+  //constructor
   Friend(float X, float Y, int Id) {
     // position
     dx = x = X;
@@ -118,8 +118,6 @@ class Friend {
     id = Id;
 
     numcon = 0;
-    
-    
   }
 
   //simple render
@@ -157,22 +155,6 @@ class Friend {
       }
     }
   }
-
-  void renderConnections() {
-    for (int n=0; n<numcon; n++) {
-      float ddx = friends[connections[n]].x-x;
-      float ddy = friends[connections[n]].y-y;
-      int m = int(1 + sqrt(ddx*ddx+ddy*ddy)/6);
-      for (int k=0; k<m; k++) {
-        float t = (1 + cos(k*PI/m))/2;
-        int px = int(x + t*ddx);
-        int py = int(y + t*ddy);
-        stroke(#333333);
-        point(px, py);
-      }
-    }
-  }
-
 
   void move() {
     // add velocity to position
@@ -243,3 +225,4 @@ class Friend {
     vy+=ay/42.22;
   }
 }
+
