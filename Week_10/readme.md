@@ -1,6 +1,6 @@
 # Experiments
 
-This is an example of what you readme should include - images, text explanation links etc...
+This is an example of what your readme should include - images, text explanation links etc...
 
 This week I experimented with two machine learning models.
 These were the [ml5js handpose model](https://learn.ml5js.org/#/reference/handpose) and GPT3 from [OpenAI](https://openai.com/blog/gpt-3-apps)
